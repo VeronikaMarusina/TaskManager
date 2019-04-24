@@ -5,6 +5,7 @@ function removeError(element){
 const submit = document.getElementById('submit');
 const tasks = [];
 const now = new Date();
+const tbody = document.getElementById('tbody');
 
 submit.addEventListener('click', function(){
     const title = document.getElementById('title');
@@ -28,7 +29,7 @@ submit.addEventListener('click', function(){
         }
     }
 
-    // setData(tasks);
+    setData(tasks);
     console.log('click', tasks);
     
 })
@@ -37,7 +38,23 @@ function setData(array){
     if(array.length > 0){
         let temp = '';
         for(let i = 0; i < array.length; i++){
-            temp += renderItem(array[i]);
+            temp += renderItem(i, array[i]);
         }
+        tbody.innerHTML = temp;
     }
+}
+
+function renderItem(i, item){
+    return `
+    <tr>
+      <th scope="row">${i + 1}</th>
+      <td>${item.title}</td>
+      <td>${item.description}</td>
+      <td>${item.date}</td>
+      <td>
+        <i data-id="${i}" data-type="edit" class="fas fa-edit"></i>
+        <i data-id="${i}" data-type="remove" class="far fa-trash-alt"></i>
+      </td>
+    </tr>
+    `;
 }
